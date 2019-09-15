@@ -1,0 +1,23 @@
+version: '3.5'
+
+services:
+  postgres-notify-monitor:
+    environment:
+      - DB_HOST=studydb
+    build:
+      context: .
+    volumes:
+      - .:/usr/src/monitor
+    command: sh -c 'until PGPASSWORD=password psql -h studydb -U postgres -c "\q" &> /dev/null; do echo "Waiting db to come online"; sleep 1; done; python -m psqlnotifymonitor.monitor'
+
+    depends_on:
+      - db
+  db:
+    container_name: studydb
+    environment:
+      - POSTGRES_PASSWORD=password
+    image: timescale/timescaledb:latest-pg11
+    volumes:
+      -  ./.db:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"

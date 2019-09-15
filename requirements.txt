@@ -1,0 +1,7 @@
+logging-tree==1.8
+logx==0.1.1562053912
+pgnotify==0.1.1561372201
+psycopg2==2.8.3
+psycopg2-binary==2.8.3
+PyYAML==5.1.2
+six==1.12.0
